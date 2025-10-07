@@ -63,7 +63,81 @@ Los Angeles’ top-paying data-science roles are:
 
 - Best-compensated at companies linking AI + product personalization (Snapchat, Stripe) or AI + media (INgrooves, Riot Games).
 
-![Bar graph for top paying data scientist jobs in Los Angeles](assets/output (4).png)
+![Bar graph for top paying data scientist jobs in Los Angeles](assets/top_jobs_graph.png)
+
+### 2. Skills for Top Paying Jobs
+To understand what skills are required for the top-paying jobs, I joined the job postings with the skills data, providing insights into what employers value for high-compensation roles.
+
+```sql
+WITH top_paying_jobs AS (
+    SELECT 
+        job_id,
+        job_title,
+        salary_year_avg,
+        company_dim.name AS company_name
+    FROM
+        job_postings_fact
+    LEFT JOIN company_dim ON job_postings_fact.company_id = company_dim.company_id
+    WHERE
+        job_title_short = 'Data Scientist' AND
+        job_location LIKE '%Los Angeles%' AND 
+        salary_year_avg IS NOT NULL
+    ORDER BY 
+        salary_year_avg DESC
+    LIMIT 10
+)
+
+SELECT 
+    top_paying_jobs.*,
+    skills
+FROM top_paying_jobs
+INNER JOIN skills_job_dim ON top_paying_jobs.job_id = skills_job_dim.job_id
+INNER JOIN skills_dim ON skills_job_dim.skill_id = skills_dim.skill_id
+```
+
+Here’s an analysis of the skill distribution for the top 10 data scientist roles in Los Angeles (2023):
+
+- Python dominates all listings, appearing in nearly every role (10/10). It’s the primary language for modeling, data cleaning, and production-level pipelines.
+
+- SQL is the second most common (8 mentions), emphasizing the need for strong database querying and data wrangling skills.
+
+- Scikit-learn appears frequently (7 mentions), showing that classical machine learning and model deployment remain key requirements.
+
+- R and TensorFlow tie (5 mentions each), reflecting dual needs — statistical modeling (R) and deep learning (TensorFlow).
+
+- Overall, hiring trends suggest hybrid proficiency — Python + SQL + ML libraries — as the foundation for data scientists in LA, with bonus points for deep learning and statistical expertise.
+
+![](assets/top_skills.png)
+
+### 3. In-Demand Skills for Data Scientists
+This query helped identify the skills most frequently requested in job postings, directing focus to areas with high demand.
+
+```sql
+SELECT skills,
+    COUNT(skills_job_dim.job_id) AS demand_count
+FROM job_postings_fact
+INNER JOIN skills_job_dim ON job_postings_fact.job_id = skills_job_dim.job_id
+INNER JOIN skills_dim ON skills_job_dim.skill_id = skills_dim.skill_id
+WHERE 
+    job_title_short = 'Data Scientist'
+GROUP BY
+    skills
+ORDER BY
+    demand_count DESC
+LIMIT 5;
+```
+
+| **Company**             | **Role**                      | **Avg Salary ($)** | **Focus Area / Industry**                  |
+|--------------------------|------------------------------|--------------------|--------------------------------------------|
+| Snapchat                 | Lead Data Scientist           | 282,500            | Social media personalization, ML ranking   |
+| Stripe                   | Data Science Manager (Risk)   | 281,450            | Fintech, risk modeling, fraud detection    |
+| Circle                   | Director, Data Science        | 272,500            | Crypto, financial analytics                |
+| INgrooves Music Group     | Data Scientist                | 250,000            | Music analytics, recommendations           |
+| DoorDash                 | Data Scientist                | 245,000            | Operations optimization, delivery logistics|
+| Riot Games               | Data Scientist                | 229,500            | Gaming analytics, player behavior          |
+
+
+
 
 
 # What I Learned
