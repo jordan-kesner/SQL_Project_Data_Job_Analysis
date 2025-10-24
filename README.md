@@ -95,7 +95,7 @@ INNER JOIN skills_job_dim ON top_paying_jobs.job_id = skills_job_dim.job_id
 INNER JOIN skills_dim ON skills_job_dim.skill_id = skills_dim.skill_id
 ```
 
-Here’s an analysis of the skill distribution for the top 10 data scientist roles in Los Angeles (2023):
+Here’s an analysis of the skill distribution for the top 10 data scientist roles in Los Angeles:
 
 - Python dominates all listings, appearing in nearly every role (10/10). It’s the primary language for modeling, data cleaning, and production-level pipelines.
 
@@ -186,7 +186,7 @@ LIMIT 25;
 - Elixir ($171K) – Suggests that proficiency in scalable, concurrent backend development for AI and data-heavy systems is highly rewarded.
 
 Overall Insight:
-High-paying skills in 2023 emphasize AI operations, infrastructure, and integration — not just data modeling. The top earners are those who can connect data workflows, automation tools, and scalable systems across the organization. 
+High-paying skills in 2025 emphasize AI operations, infrastructure, and integration — not just data modeling. The top earners are those who can connect data workflows, automation tools, and scalable systems across the organization. 
 
 ### 5. Most Optimal Skills to Learn
 Combining insights from demand and salary data, this query aimed to pinpoint skills that are both in high demand and have high salaries, offering a strategic focus for skill development.
@@ -277,7 +277,7 @@ Throughout this adventure, I leveled up my SQL and data analysis skills with som
 # Conclusions
 
 ### 🔍 Insights
-From this analysis, several key insights emerged about the data science job landscape in 2023:
+From this analysis, several key insights emerged about the data science job landscape in 2025:
 
 - **Top-Paying Data Scientist Jobs:** The highest-paying roles in Los Angeles average around **$254K**, concentrated in tech and entertainment industries like **Snapchat, Stripe, and Riot Games**.  
 - **Skills for Top-Paying Jobs:** Mastery of **Python, SQL, and Scikit-learn** forms the backbone of high-paying data science positions, with deep learning and leadership skills boosting earnings further.  
